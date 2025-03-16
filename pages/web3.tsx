@@ -22,7 +22,8 @@ const CallTest = () => {
     args: [account?.address as `0x${string}`],
   });
   return (
-    <div>{result.data?.toString()}
+    <div>
+      {result.data?.toString()}
       <Button
         onClick={() => {
           writeContract(
