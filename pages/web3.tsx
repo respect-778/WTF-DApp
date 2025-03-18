@@ -22,7 +22,7 @@ import { parseEther } from "viem";
 import { useEffect } from "react";
 
 // Sepolia test contract 0x81BaD6F768947D7741c83d9EB9007e1569115703
-const CONTRACT_ADDRESS = "0xEcd0D12E21805803f70de03B72B1C162dB0898d9";
+const CONTRACT_ADDRESS = "0xEC0998ec041ef40870D33996d842252CBdc7C170";
 
 const CallTest = () => {
   const { account } = useAccount();
@@ -105,10 +105,10 @@ export default function Web3() {
       }}
       transports={{
         [Mainnet.id]: http(
-          "https://api.zan.top/node/v1/eth/mainnet/7f039b4a093940a8bb5d2f76cca81e45"
+          "https://api.zan.top/node/v1/eth/mainnet/edab0ddddb444fec9c5a5f97496a7167"
         ),
         [Sepolia.id]: http(
-          "https://api.zan.top/node/v1/eth/sepolia/7f039b4a093940a8bb5d2f76cca81e45"
+          "https://api.zan.top/node/v1/eth/sepolia/edab0ddddb444fec9c5a5f97496a7167"
         ),
       }}
     >
