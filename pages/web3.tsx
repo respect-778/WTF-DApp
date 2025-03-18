@@ -1,12 +1,37 @@
-import { parseEther } from "viem";
+import { createConfig, http, useReadContract, useWriteContract } from "wagmi";
+import { mainnet, sepolia } from "wagmi/chains";
+import {
+  WagmiWeb3ConfigProvider,
+  MetaMask,
+  Sepolia,
+} from "@ant-design/web3-wagmi";
+import {
+  Address,
+  NFTCard,
+  Connector,
+  ConnectButton,
+  useAccount,
+} from "@ant-design/web3";
+import { injected } from "wagmi/connectors";
 import { Button, message } from "antd";
-import { http, useReadContract, useWriteContract } from "wagmi";
-import { Mainnet, WagmiWeb3ConfigProvider, MetaMask } from '@ant-design/web3-wagmi';
-import { Address, NFTCard, ConnectButton, Connector, useAccount } from "@ant-design/web3";
+import { parseEther } from "viem";
+
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+  connectors: [
+    injected({
+      target: "metaMask",
+    }),
+  ],
+});
 
 const CallTest = () => {
   const { account } = useAccount();
-  const { writeContract } = useWriteContract();
   const result = useReadContract({
     abi: [
       {
@@ -17,10 +42,11 @@ const CallTest = () => {
         outputs: [{ type: 'uint256' }],
       },
     ],
-    address: '0xEcd0D12E21805803f70de03B72B1C162dB0898d9',
+    address: '0xEC0998ec041ef40870D33996d842252CBdc7C170',
     functionName: 'balanceOf',
     args: [account?.address as `0x${string}`],
   });
+  const { writeContract } = useWriteContract();
   return (
     <div>
       {result.data?.toString()}
@@ -43,7 +69,7 @@ const CallTest = () => {
                   outputs: [],
                 },
               ],
-              address: "0xEcd0D12E21805803f70de03B72B1C162dB0898d9",
+              address: "0xEC0998ec041ef40870D33996d842252CBdc7C170",
               functionName: "mint",
               args: [BigInt(1)],
               value: parseEther("0.01"),
@@ -68,10 +94,8 @@ const CallTest = () => {
 export default function Web3() {
   return (
     <WagmiWeb3ConfigProvider
-      chains={[Mainnet]}
-      transports={{
-        [Mainnet.id]: http('https://api.zan.top/node/v1/eth/mainnet/edab0ddddb444fec9c5a5f97496a7167'),
-      }}
+      config={config}
+      chains={[Sepolia]}
       wallets={[MetaMask()]}
     >
       <Address format address="0xEcd0D12E21805803f70de03B72B1C162dB0898d9" />
@@ -85,4 +109,4 @@ export default function Web3() {
       <CallTest />
     </WagmiWeb3ConfigProvider>
   );
-}
+};
