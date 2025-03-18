@@ -16,12 +16,11 @@ import { injected } from "wagmi/connectors";
 import { Button, message } from "antd";
 import { parseEther } from "viem";
 
-
 const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [mainnet.id]: http('https://api.zan.top/node/v1/eth/mainnet/edab0ddddb444fec9c5a5f97496a7167'),
+    [sepolia.id]: http('https://api.zan.top/node/v1/eth/sepolia/edab0ddddb444fec9c5a5f97496a7167'),
   },
   connectors: [
     injected({
@@ -47,6 +46,7 @@ const CallTest = () => {
     args: [account?.address as `0x${string}`],
   });
   const { writeContract } = useWriteContract();
+
   return (
     <div>
       {result.data?.toString()}
